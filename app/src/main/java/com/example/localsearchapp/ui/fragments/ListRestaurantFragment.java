@@ -1,5 +1,6 @@
 package com.example.localsearchapp.ui.fragments;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -11,21 +12,26 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.localsearchapp.R;
 import com.example.localsearchapp.adapters.ListRestaurantAdapter;
 import com.example.localsearchapp.databinding.FragmentListRestaurantBinding;
 import com.example.localsearchapp.domain.Restaurant;
+import com.example.localsearchapp.interfaces.OnItemClickListener;
+import com.example.localsearchapp.utility.UIUtil;
 import com.example.localsearchapp.viewmodel.RestaurantViewModel;
 
 import java.util.ArrayList;
 
-public class ListRestaurantFragment extends Fragment {
+public class ListRestaurantFragment extends Fragment implements OnItemClickListener {
 
     public static String FRAGMENT_TAG = "ListRestaurantFragment";
 
@@ -34,6 +40,11 @@ public class ListRestaurantFragment extends Fragment {
     private ListRestaurantAdapter adapter;
 
     public ListRestaurantFragment() {
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 
     @Override
@@ -81,11 +92,24 @@ public class ListRestaurantFragment extends Fragment {
             dividerItemDecoration.setDrawable(drawable);
         }
         binding.listOfRestaurants.addItemDecoration(dividerItemDecoration);
+        adapter.setOnItemClickListener(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+    @Override
+    public void onItemClick(Restaurant restaurant) {
+
+        DetailRestaurantFragment detailRestaurantFragment = new DetailRestaurantFragment();
+        Bundle data = new Bundle();
+        data.putSerializable("restaurantData", restaurant);
+        detailRestaurantFragment.setArguments(data);
+
+        UIUtil.replaceFragment(getActivity(), R.id.fragment_container, detailRestaurantFragment, DetailRestaurantFragment.FRAGMENT_TAG);
     }
 }

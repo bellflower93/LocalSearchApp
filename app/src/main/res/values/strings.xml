@@ -3,5 +3,7 @@
 
     <string name="empty_data">"Load data is failed, please try later."</string>
     <string name="call">Call</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

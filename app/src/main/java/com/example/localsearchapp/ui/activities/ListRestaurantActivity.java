@@ -17,4 +17,5 @@ public class ListRestaurantActivity extends AppCompatActivity {
         UIUtil.addFragment(this, R.id.fragment_container, new ListRestaurantFragment(), ListRestaurantFragment.FRAGMENT_TAG);
     }
 
+
 }

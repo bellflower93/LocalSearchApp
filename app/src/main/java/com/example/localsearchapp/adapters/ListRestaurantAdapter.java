@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.localsearchapp.databinding.RowRestaurantBinding;
 import com.example.localsearchapp.domain.Category;
 import com.example.localsearchapp.domain.Restaurant;
+import com.example.localsearchapp.interfaces.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,8 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
     Context context;
     List<Restaurant> listOfRestaurants;
     RowRestaurantBinding binding;
+    OnItemClickListener onItemClickListener;
+
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
 
@@ -80,6 +83,12 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
                 context.startActivity(intent);
             }
         });
+        binding.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(restaurant);
+            }
+        });
     }
 
     @Override
@@ -94,6 +103,9 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
     public void setListOfRestaurants(List<Restaurant> restaurantList) {
         listOfRestaurants = restaurantList;
         notifyDataSetChanged();
+    }
+    public void setOnItemClickListener(OnItemClickListener _onItemClickListener) {
+        onItemClickListener = _onItemClickListener;
     }
 
     @Override

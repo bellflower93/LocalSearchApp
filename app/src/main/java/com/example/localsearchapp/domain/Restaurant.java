@@ -2,9 +2,10 @@ package com.example.localsearchapp.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     @SerializedName("id")
     String id;
