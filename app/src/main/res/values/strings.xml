@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LocalSearchApp</string>
+
+    <string name="empty_data">"Load data is failed, please try later."</string>
+    <string name="call">Call</string>
+
+</resources>
