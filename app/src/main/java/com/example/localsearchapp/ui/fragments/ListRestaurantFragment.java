@@ -38,6 +38,9 @@ public class ListRestaurantFragment extends Fragment implements OnItemClickListe
     private FragmentListRestaurantBinding binding;
     private RestaurantViewModel restaurantViewModel;
     private ListRestaurantAdapter adapter;
+    RecyclerView.OnScrollListener onScrollListener;
+    int pageSize = 10;
+    boolean isLoading = false;
 
     public ListRestaurantFragment() {
     }
@@ -71,6 +74,7 @@ public class ListRestaurantFragment extends Fragment implements OnItemClickListe
         restaurantViewModel.getLiveDataListOfRestaurant().observe(getViewLifecycleOwner(), new Observer<ArrayList<Restaurant>>() {
             @Override
             public void onChanged(ArrayList<Restaurant> restaurants) {
+                isLoading = false;
                 if (restaurants != null && !restaurants.isEmpty()) {
                     adapter.setListOfRestaurants(restaurants);
                 } else {
@@ -93,6 +97,30 @@ public class ListRestaurantFragment extends Fragment implements OnItemClickListe
         }
         binding.listOfRestaurants.addItemDecoration(dividerItemDecoration);
         adapter.setOnItemClickListener(this);
+        onScrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int visibleItems = layoutManager.getChildCount();
+                int totalItems = 30;
+                int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+
+                if (!isLoading &&
+                        (visibleItems + firstVisiblePosition) >= layoutManager.getItemCount()
+                            && layoutManager.getItemCount() < totalItems) {
+                        isLoading = true;
+                        restaurantViewModel.getRestaurant();
+                }
+
+            }
+        };
+        binding.listOfRestaurants.addOnScrollListener(onScrollListener);
     }
 
     @Override

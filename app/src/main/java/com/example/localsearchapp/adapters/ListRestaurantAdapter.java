@@ -23,7 +23,7 @@ import java.util.List;
 public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAdapter.RestaurantViewHolder> {
 
     Context context;
-    List<Restaurant> listOfRestaurants;
+    List<Restaurant> listOfRestaurants = new ArrayList<>();
     RowRestaurantBinding binding;
     OnItemClickListener onItemClickListener;
 
@@ -101,9 +101,11 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
     }
 
     public void setListOfRestaurants(List<Restaurant> restaurantList) {
-        listOfRestaurants = restaurantList;
+        listOfRestaurants.addAll(restaurantList);
         notifyDataSetChanged();
     }
+
+
     public void setOnItemClickListener(OnItemClickListener _onItemClickListener) {
         onItemClickListener = _onItemClickListener;
     }
